@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-hello from development
-=======
-hello
->>>>>>> d11e247 (A new commit on branch testing.)
