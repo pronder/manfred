@@ -1,0 +1,70 @@
+name: backend workflow
+
+on:
+  push:
+    branches:
+      - development
+    paths:
+      - backend/**
+  pull_request:
+
+env:
+  IMAGE_TAG: ghcr.io/${{ github.repository }}:${{ github.sha }}
+
+jobs:
+  Build_image_and_push_to_registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build image
+        run: docker build backend/ --file Dockerfile --tag $IMAGE_TAG
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push image
+        run: docker push $IMAGE_TAG
+
+  Utests:
+    needs: Build_image_and_push_to_registry
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}:${{ github.sha }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    services:
+      db:
+        image: postgres
+        env:
+          POSTGRES_USERNAME: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Utests
+        run: |
+          cd /var/manfred/
+          yarn run test
+
+  Static_analysis:
+    needs: Build_image_and_push_to_registry
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}:${{ github.sha }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Eslint
+        run: |
+          cd /var/manfred/
+          yarn run lint
