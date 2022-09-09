@@ -35,7 +35,7 @@ export const requestMiddleware = (
   options?: HandlerOptions,
 ): RequestHandler => async (req: Request, res: Response, next: NextFunction) => {
   if (options?.validation?.body) {
-    const { error } = options?.validation?.body.validate(req.body);
+    const { error } = options?.validation?.body.validate(req.body) || null;
     if (error != null) {
       next(new BadRequest(getMessageFromJoiError(error)));
       return;
