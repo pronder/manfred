@@ -91,7 +91,7 @@ export default class SafeMongooseConnection {
       this.options.onStartConnection(this.options.mongoUrl);
     }
     mongoose.connect(this.options.mongoUrl, this.mongoConnectionOptions).catch(() => { });
-  }
+  };
 
   /**
    * Handler called when mongo connection is established

@@ -68,6 +68,12 @@
       }
     ],
     "no-unused-vars": "off",
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true
+      }
+    ],
     "dot-notation": "off",
     "class-methods-use-this": "off",
     "comma-dangle": [
