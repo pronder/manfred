@@ -1,5 +1,3 @@
-const app = require('../src/app');
-
 describe('App Test', () => {
   test('tmp test', () => {
     const input = [1, 2];
