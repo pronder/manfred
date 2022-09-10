@@ -1,7 +1,5 @@
 describe('App Test', () => {
-  test('tmp test', () => {
-    const input = [1, 2];
-    const output = [1, 2];
-    expect(input).toEqual(output);
-  });
-});
+  test('GET /random-url should return 404', () => {})
+
+  test('GET /book/all should return 200', () => {})
+})
