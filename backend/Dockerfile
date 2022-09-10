@@ -9,10 +9,11 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY yarn.lock ./
 COPY tsconfig.json ./
-COPY .env ./
+# temporary solution
+COPY .env.template ./  
 COPY init_db.sh ./
 
-# # Copies everything in the src directory to WORKDIR/src
+# Copies everything in the src directory to WORKDIR/src
 COPY ./src ./src
 
 # Installs all packages
