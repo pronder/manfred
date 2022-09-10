@@ -21,5 +21,7 @@ app.get('/test', (request: Request, response: Response) => {
 app.get('/users', db.getUsers);
 
 app.listen(port, () => {
+  /* eslint-disable no-console */
   console.log(`App running on port ${port}.`);
+  /* eslint-enable no-console */
 });
