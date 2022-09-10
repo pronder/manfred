@@ -7,6 +7,7 @@ COPY . .
 RUN yarn install
 RUN yarn build
 
+RUN rm -rf dist/__tests
 COPY src/public dist/src/public
 
 EXPOSE 3000
