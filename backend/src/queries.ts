@@ -15,15 +15,16 @@ const pool = new Pool({
   port: parseInt(process.env.DB_PORT || '5432', 10)
 });
 
-const getUsers = (request:Request, response:Response) => {
-  pool.query('SELECT * FROM users ORDER BY id ASC', (error:any, results:any) => {
-    if (error) {
-      throw error;
+const getUsers = (request: Request, response: Response) => {
+  pool.query(
+    'SELECT * FROM users ORDER BY id ASC',
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows);
     }
-    response.status(200).json(results.rows);
-  });
+  );
 };
 
-module.exports = {
-  getUsers
-};
+module.exports = { getUsers };
