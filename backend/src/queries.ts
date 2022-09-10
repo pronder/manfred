@@ -1,30 +1,30 @@
-// eslint-disable-next-line import/no-import-module-exports
-import { Request, Response } from 'express';
-// eslint-disable-next-line import/no-import-module-exports
-import dotenv from 'dotenv';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { Request, Response } from 'express'
+import dotenv from 'dotenv'
+import { Pool } from 'pg'
 
-dotenv.config(); // Reads .env file and makes it accessible via process.env
+dotenv.config()
 
-const { Pool } = require('pg');
-
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: parseInt(process.env.DB_PORT || '5432', 10)
-});
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: parseInt(process.env.DB_PORT || '5432', 10),
+})
 
-const getUsers = (request: Request, response: Response) => {
-  pool.query(
-    'SELECT * FROM users ORDER BY id ASC',
-    (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows);
-    }
-  );
-};
-
-module.exports = { getUsers };
+// eslint-disable-next-line import/prefer-default-export
+export const getUsers = (request: Request, response: Response) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    pool.query(
+        'SELECT * FROM users ORDER BY id ASC',
+        (error: Error, results) => {
+            if (error) {
+                throw error
+            }
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            response.status(200).json(results.rows)
+        }
+    )
+}
