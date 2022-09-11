@@ -1,9 +1,14 @@
-FROM node:16.16.0 as base
+# Installs Node.js image
+FROM node:16.13.1-alpine3.14
 
-WORKDIR /var/manfred/
+# sets the working directory for any RUN, CMD, COPY command
+# all files we put in the Docker container running the server will be in /usr/src/app (e.g. /usr/src/app/package.json)
+WORKDIR /var/manfred
 
+# Copies package.json, package-lock.json, tsconfig.json, .env to the root of WORKDIR
 COPY . .
 
+# Installs all packages
 RUN yarn install
 RUN yarn build
 
@@ -11,4 +16,6 @@ RUN rm -rf dist/__tests
 COPY src/public dist/src/public
 
 EXPOSE 3000
-CMD ["dist/src/server.js"]
+
+# Runs the dev yarn script to build & start the server
+CMD yarn dev
