@@ -1,10 +1,13 @@
+/* eslint-disable no-console */
+
 import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import path from 'path'
 import dotenv from 'dotenv'
 
-import { getUsers } from './queries'
+import db from './sequelize'
+import UserModel from './models/user'
 
 const app = express()
 
@@ -26,12 +29,34 @@ app.get('/test', (request: Request, response: Response) => {
     response.send('test output')
 })
 
-app.get('/users', getUsers)
-
-app.listen(port, () => {
-    // eslint-disable-next-line no-console
-    console.log(`App running on port ${port}.`)
-    // eslint-enable no-console
+app.get('/users', (req, res) => {
+    UserModel.findAll()
+        .then((result) => res.json(result))
+        .catch((error) => {
+            console.log(error)
+            return res.json({
+                message: 'Unable to fetch records!',
+            })
+        })
 })
 
-export default app
+const initApp = async () => {
+    console.log('Testing the database connection..')
+    try {
+        await db.authenticate()
+        console.log('Connection has been established successfully.')
+
+        await UserModel.sync({
+            alter: true,
+        })
+
+        app.listen(port, () => {
+            console.log(`Server is up and running at: http://localhost:${port}`)
+        })
+    } catch (error) {
+        console.error('Unable to connect to the database:', error)
+    }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+initApp()
