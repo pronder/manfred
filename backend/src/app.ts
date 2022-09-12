@@ -25,18 +25,24 @@ app.get('/', (request: Request, response: Response) => {
     response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-app.get('/test', (request: Request, response: Response) => {
-    response.send('test output')
-})
-
-app.get('/users', (req, res) => {
+app.get('/users', (request: Request, response: Response) => {
     UserModel.findAll()
-        .then((result) => res.json(result))
+        .then((result) => response.json(result))
         .catch((error) => {
             console.log(error)
-            return res.json({
+            return response.json({
                 message: 'Unable to fetch records!',
             })
+        })
+})
+
+app.post('/users', (request: Request, response: Response) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    UserModel.create(request.body)
+        .then((result) => response.json(result))
+        .catch((error) => {
+            console.log(error)
+            return response.json({ message: 'Can not create record' })
         })
 })
 
@@ -46,9 +52,7 @@ const initApp = async () => {
         await db.authenticate()
         console.log('Connection has been established successfully.')
 
-        await UserModel.sync({
-            alter: true,
-        })
+        await UserModel.sync()
 
         app.listen(port, () => {
             console.log(`Server is up and running at: http://localhost:${port}`)
