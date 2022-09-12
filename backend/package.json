@@ -38,6 +38,8 @@
         "joi": "17.6.0",
         "pg": "^8.8.0",
         "pg-types": "^4.0.0",
+        "sequelize": "^6.21.6",
+        "sequelize-typescript": "^2.1.3",
         "swagger-ui-express": "4.4.0",
         "winston": "3.8.1",
         "winston-transport": "4.5.0"

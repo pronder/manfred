@@ -1,10 +1,13 @@
+/* eslint-disable no-console */
+
 import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import path from 'path'
 import dotenv from 'dotenv'
 
-import { getUsers } from './queries'
+import db from './sequelize'
+import UserModel from './models/user'
 
 const app = express()
 
@@ -22,16 +25,42 @@ app.get('/', (request: Request, response: Response) => {
     response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-app.get('/test', (request: Request, response: Response) => {
-    response.send('test output')
+app.get('/users', (request: Request, response: Response) => {
+    UserModel.findAll()
+        .then((result) => response.json(result))
+        .catch((error) => {
+            console.log(error)
+            return response.json({
+                message: 'Unable to fetch records!',
+            })
+        })
 })
 
-app.get('/users', getUsers)
-
-app.listen(port, () => {
-    // eslint-disable-next-line no-console
-    console.log(`App running on port ${port}.`)
-    // eslint-enable no-console
+app.post('/users', (request: Request, response: Response) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    UserModel.create(request.body)
+        .then((result) => response.json(result))
+        .catch((error) => {
+            console.log(error)
+            return response.json({ message: 'Can not create record' })
+        })
 })
 
-export default app
+const initApp = async () => {
+    console.log('Testing the database connection..')
+    try {
+        await db.authenticate()
+        console.log('Connection has been established successfully.')
+
+        await UserModel.sync()
+
+        app.listen(port, () => {
+            console.log(`Server is up and running at: http://localhost:${port}`)
+        })
+    } catch (error) {
+        console.error('Unable to connect to the database:', error)
+    }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+initApp()
