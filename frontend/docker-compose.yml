@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+    react:
+        container_name: react
+        restart: always
+        build: .
+        ports:
+            - ${PORT}:${PORT}
+        volumes:
+            - .:/var/manfred/frontend
+
+volumes:
+    data: {}
