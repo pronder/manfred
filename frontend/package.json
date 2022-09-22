@@ -27,7 +27,7 @@
         "eject": "react-scripts eject",
         "format-write": "npx prettier --write .",
         "format-check": "npx prettier --check .",
-        "lint": "npx eslint  . --ext .tsx",
+        "lint": "npx eslint . --ext .tsx,.ts,.js",
         "lint-fix": "npx eslint  . --ext .tsx --fix",
         "prepare": "cd .. && husky install frontend/.husky"
     },
