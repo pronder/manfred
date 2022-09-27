@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 import express, { Request, Response } from 'express'
-import bodyParser from 'body-parser'
 import compression from 'compression'
 import path from 'path'
 import dotenv from 'dotenv'
@@ -12,8 +11,8 @@ import UserModel from './models/user'
 const app = express()
 
 app.use(compression())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 
