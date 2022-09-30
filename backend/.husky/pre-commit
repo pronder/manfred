@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
+# shellcheck disable=SC1091
 . "$(dirname -- "$0")/_/husky.sh"
 
-cd backend
+cd backend || exit
 npm run format-check
 npm run lint

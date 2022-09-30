@@ -2,10 +2,15 @@
     "editor.formatOnSave": true,
     "files.autoSave": "onFocusChange",
     "eslint.enable": true,
+    "shellcheck.enable": true,
+    "shellformat.flag": "-i 4 -ci",
     "[ignore]": {
         "editor.defaultFormatter": "foxundermoon.shell-format"
     },
     "[dockerfile]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "[shellscript]": {
         "editor.defaultFormatter": "foxundermoon.shell-format"
     },
     "[json]": {
