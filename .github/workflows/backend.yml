@@ -78,9 +78,10 @@ jobs:
           yarn run check-prettier-rules-conflicts
           yarn run format-check
 
-      - name: Shellcheck & shfmt
+      - name: Shfmt
         if: always()
-        uses: luizm/action-sh-checker@master
-        with:
-          sh_checker_comment: true
-          sh_checker_exclude: "node_modules/ dist/ .husky/_/"
+        uses: mfinelli/setup-shfmt@v1
+        run: |
+          cd /var/manfred
+          shell_files="$(shfmt -f . | grep -v node_modules/ | grep -v .husky/_/ | grep -v dist/)"
+          echo "$shell_files" | xargs shfmt -i 4 -ci -d
