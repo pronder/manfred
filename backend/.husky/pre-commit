@@ -3,5 +3,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd backend || exit
-npm run format-check
-npm run lint
+yarn run format-check
+yarn run lint
