@@ -1,7 +1,11 @@
 #!/usr/bin/env sh
 # shellcheck disable=SC1091
 . "$(dirname -- "$0")/_/husky.sh"
-
 cd backend || exit
+
+shell_files="$(shfmt -f . | grep -v node_modules/ | grep -v .husky/_/ | grep -v dist/)"
+
 yarn run format-check
 yarn run lint
+echo "$shell_files" | xargs shfmt -i 4 -ci -d
+echo "$shell_files" | xargs shellcheck
