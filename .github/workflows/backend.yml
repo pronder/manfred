@@ -77,3 +77,10 @@ jobs:
           cd /var/manfred/
           yarn run check-prettier-rules-conflicts
           yarn run format-check
+
+      - name: Shellcheck & shfmt
+        if: always()
+        uses: luizm/action-sh-checker@master
+        with:
+          sh_checker_comment: true
+          sh_checker_exclude: "node_modules/ dist/ .husky/_/"
