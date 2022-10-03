@@ -11,7 +11,7 @@
         "format-check": "npx --no-install prettier --check .",
         "lint": "npx --no-install eslint  . --ext .ts",
         "lint-fix": "npx --no-install eslint  . --ext .ts --fix",
-        "install-githooks": "cd .. && npx --no-install husky install backend/.husky"
+        "install-githooks": "cd .. && backend/node_modules/.bin/husky install backend/.husky"
     },
     "dependencies": {
         "compression": "^1.7.4",
