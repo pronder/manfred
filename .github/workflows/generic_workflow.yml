@@ -1,0 +1,24 @@
+name: generic workflow
+
+on:
+  push:
+    branches:
+      - development
+    paths-ignore:
+      - backend/**
+      - frontend/**
+  pull_request:
+    paths-ignore:
+      - backend/**
+      - frontend/**
+
+jobs:
+  Utests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "No tests required"
+
+  Static_analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "No static analysis required"
