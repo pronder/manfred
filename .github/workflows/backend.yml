@@ -66,7 +66,21 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - name: Shfmt
+        run: |
+          cd /var/manfred
+          shell_files="$(shfmt -f . | grep -vf .shellignore)"
+          echo "$shell_files" | xargs shfmt -i 4 -ci -d
+
+      - name: Shellcheck
+        if: always()
+        run: |
+          cd /var/manfred
+          shell_files="$(shfmt -f . | grep -vf .shellignore)"
+          echo "$shell_files" | xargs shellcheck
+
       - name: Eslint
+        if: always()
         run: |
           cd /var/manfred/
           yarn run lint
@@ -77,11 +91,3 @@ jobs:
           cd /var/manfred/
           yarn run check-prettier-rules-conflicts
           yarn run format-check
-
-      - name: Shfmt
-        if: always()
-        uses: mfinelli/setup-shfmt@v1
-        run: |
-          cd /var/manfred
-          shell_files="$(shfmt -f . | grep -v node_modules/ | grep -v .husky/_/ | grep -v dist/)"
-          echo "$shell_files" | xargs shfmt -i 4 -ci -d

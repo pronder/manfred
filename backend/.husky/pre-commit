@@ -2,7 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 cd backend || exit
 
-shell_files="$(shfmt -f . | grep -v node_modules/ | grep -v .husky/_/ | grep -v dist/)"
+shell_files="$(shfmt -f . | grep -vf .shellignore)"
 
 yarn run format-check
 yarn run lint
