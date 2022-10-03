@@ -6,7 +6,7 @@ cd backend || exit
 
 shell_files="$(shfmt -f . | grep -vf .shellignore)"
 
-yarn run format-check
+# yarn run format-check
 yarn run lint
 echo "$shell_files" | xargs shfmt -i 4 -ci -d
 echo "$shell_files" | xargs shellcheck
