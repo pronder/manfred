@@ -1,0 +1,25 @@
+{
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "extends": [
+        "eslint:recommended",
+        "airbnb-base",
+        "airbnb-typescript",
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "prettier" // prettier must be listed as last one in the `extends`
+    ],
+    "plugins": ["@typescript-eslint", "react"]
+}
