@@ -7,7 +7,7 @@ services:
         ports:
             - ${PORT}:${PORT}
         volumes:
-            - .:/var/manfred/frontend
+            - .:/var/manfred
 
 volumes:
     data: {}

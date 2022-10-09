@@ -1,7 +1,7 @@
 {
-    "name": "my-app",
+    "name": "manfred-frontend",
     "version": "0.1.0",
-    "private": true,
+    "license": "MIT",
     "dependencies": {
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^13.0.0",
@@ -21,21 +21,15 @@
     },
     "scripts": {
         "start": "PORT=5555 react-scripts start",
-        "build": "tsc",
+        "build": "npx --no-install tsc",
         "build-dev": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "format-write": "npx prettier --write .",
-        "format-check": "npx prettier --check .",
-        "lint": "npx eslint . --ext .tsx,.ts,.js",
-        "lint-fix": "npx eslint  . --ext .tsx --fix",
-        "prepare": "cd .. && husky install frontend/.husky"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
+        "test": "npx --no-install jest",
+        "format-write": "npx --no-install prettier --write .",
+        "format-check": "npx --no-install prettier --check .",
+        "lint": "npx --no-install eslint . --ext .tsx,.ts,.js",
+        "lint-fix": "npx --no-install eslint  . --ext .tsx,.ts --fix",
+        "prepare": "cd .. && husky install frontend/.husky",
+        "install-githooks": "cd .. && frontend/node_modules/.bin/husky install frontend/.husky"
     },
     "browserslist": {
         "production": [
@@ -52,6 +46,9 @@
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.0.0",
         "eslint": "^8.23.1",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-config-standard-with-typescript": "^23.0.0",
         "eslint-plugin-import": "^2.25.2",
