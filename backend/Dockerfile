@@ -1,21 +1,19 @@
-# Installs Node.js image
 FROM node:16.13.1-alpine3.14
 
-# sets the working directory for any RUN, CMD, COPY command
-# all files we put in the Docker container running the server will be in /usr/src/app (e.g. /usr/src/app/package.json)
 WORKDIR /var/manfred
 
-# Copies package.json, package-lock.json, tsconfig.json, .env to the root of WORKDIR
 COPY . .
 
-# Installs all packages
 RUN yarn install
 RUN yarn build
 
-RUN rm -rf dist/__tests
+RUN rm -rf dist/__tests__
 COPY src/public dist/src/public
 
-EXPOSE 3000
+RUN apk add tar xz
 
-# Runs the dev yarn script to build & start the server
-CMD yarn dev
+RUN wget "https://github.com/mvdan/sh/releases/download/v3.5.1/shfmt_v3.5.1_linux_amd64" -O /usr/local/bin/shfmt
+RUN chmod +x /usr/local/bin/shfmt
+
+RUN wget "https://github.com/koalaman/shellcheck/releases/download/v0.8.0/shellcheck-v0.8.0.linux.x86_64.tar.xz" -O- | tar xJ -C /usr/local/bin/ --strip-components=1 --wildcards '*/shellcheck'
+RUN chmod +x /usr/local/bin/shellcheck
